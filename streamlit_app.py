@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Initialize the InferenceClient with the model and token
-client = InferenceClient("stabilityai/stable-diffusion-xl-base-1.0", token="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")
+client = InferenceClient("stabilityai/stable-diffusion-xl-base-1.0", token="hf_YOUR_TOKEN_HERE")
 
 # Set up the Streamlit interface
 st.title("Huggingface API Image Generator")
