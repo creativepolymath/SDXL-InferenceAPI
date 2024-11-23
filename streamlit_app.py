@@ -34,3 +34,5 @@ if st.button("Generate Image"):
     if result:
         if isinstance(result, bytes):
             st.image(result, caption="Generated Image")
+        else:
+            st.write("Response:", result)
