@@ -1,5 +1,10 @@
 import streamlit as st
 import httpx
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # Set up the Streamlit interface
 st.title("Huggingface API Image Generator")
@@ -17,7 +22,9 @@ def generate_image(prompt, style):
     
     try:
         # Make a request to the Huggingface API
+        logger.info("Sending request to Huggingface API")
         response = httpx.post("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0", headers=headers, json=payload)
+        logger.info("Received response from Huggingface API")
         response.raise_for_status()
 
         # Check if the response is JSON or binary
@@ -27,12 +34,15 @@ def generate_image(prompt, style):
             return response.content
 
     except httpx.HTTPStatusError as e:
+        logger.error(f"HTTP error occurred: {e.response.status_code} - {e.response.text}")
         st.error(f"HTTP error occurred: {e.response.status_code} - {e.response.text}")
         st.write("Please check if the model name and API key are correct.")
     except httpx.RequestError as e:
+        logger.error(f"Request error occurred: {str(e)}")
         st.error(f"Request error occurred: {str(e)}")
         st.write("There might be a network issue. Please try again later.")
     except Exception as e:
+        logger.error(f"An unexpected error occurred: {str(e)}")
         st.error(f"An unexpected error occurred: {str(e)}")
         st.write("Please check the logs for more details.")
     return None
