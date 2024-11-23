@@ -10,4 +10,4 @@ This project is a Python application that utilizes Huggingface's Inference Model
 
 ## GitHub Repository
 
-For more information, visit the [GitHub repository](https://github.com/yourusername/SDXL-InferenceAPI).
+For more information, visit the [GitHub repository](https://github.com/creativepolymath/SDXL-InferenceAPI).
