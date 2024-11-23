@@ -20,10 +20,12 @@ prompt = st.text_input("Prompt", "A beautiful landscape")
 style = st.selectbox("Select Style", ["Realistic", "Artistic", "Cartoon", "Abstract"])
 
 # Function to call the Huggingface API using InferenceClient
-def generate_image(prompt):
+def generate_image(prompt, style):
+    # Concatenate prompt and style
+    styled_prompt = f"{prompt} in {style} style"
     try:
-        logger.info("Generating image with prompt: %s", prompt)
-        result = client.text_to_image(prompt)
+        logger.info("Generating image with styled prompt: %s", styled_prompt)
+        result = client.text_to_image(styled_prompt)
         logger.info("Image generated successfully")
         return result
     except Exception as e:
@@ -33,7 +35,7 @@ def generate_image(prompt):
 
 # Generate image on button click
 if st.button("Generate Image"):
-    result = generate_image(prompt)
+    result = generate_image(prompt, style)
     if result:
         if isinstance(result, bytes):
             st.image(result, caption="Generated Image")
