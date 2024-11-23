@@ -15,18 +15,33 @@ def generate_image(prompt, style):
     headers = {"Authorization": "Bearer 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"}
     payload = {"inputs": prompt, "options": {"style": style}}
     
-    # Make a request to the Huggingface API
-    response = httpx.post("https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev", headers=headers, json=payload)
-    
-    if response.status_code == 200:
-        return response.json()
-    else:
-        st.error("Failed to generate image. Please try again.")
-        return None
+    try:
+        # Make a request to the Huggingface API
+        response = httpx.post("https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0", headers=headers, json=payload)
+        response.raise_for_status()
+
+        # Check if the response is JSON or binary
+        if response.headers['Content-Type'] == 'application/json':
+            return response.json()
+        else:
+            return response.content
+
+    except httpx.HTTPStatusError as e:
+        st.error(f"HTTP error occurred: {e.response.status_code} - {e.response.text}")
+        st.write("Please check if the model name and API key are correct.")
+    except httpx.RequestError as e:
+        st.error(f"Request error occurred: {str(e)}")
+        st.write("There might be a network issue. Please try again later.")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {str(e)}")
+        st.write("Please check the logs for more details.")
+    return None
 
 # Generate image on button click
 if st.button("Generate Image"):
     result = generate_image(prompt, style)
     if result:
-        st.image(result["image"], caption="Generated Image")
-        st.write("Response:", result["text"])
+        if isinstance(result, bytes):
+            st.image(result, caption="Generated Image")
+        else:
+            st.write("Response:", result.get("text", "No text response"))
