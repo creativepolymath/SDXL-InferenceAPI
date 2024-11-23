@@ -2,7 +2,7 @@ import streamlit as st
 from huggingface_hub import InferenceClient
 
 # Initialize the InferenceClient with the model and token
-client = InferenceClient("stabilityai/stable-diffusion-xl-base-1.0", token="hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+client = InferenceClient("stabilityai/stable-diffusion-xl-base-1.0", token="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")
 
 # Set up the Streamlit interface
 st.title("Huggingface API Image Generator")
