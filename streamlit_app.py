@@ -25,7 +25,6 @@ def generate_image(prompt):
         return result
     except Exception as e:
         logger.error("An error occurred: %s", str(e))
-    except Exception as e:
         st.error(f"An error occurred: {str(e)}")
         return None
 
