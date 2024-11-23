@@ -12,11 +12,11 @@ style = st.selectbox("Style", ["Realistic", "Cartoon", "Abstract"])
 # Function to call the Huggingface API
 def generate_image(prompt, style):
     # Replace 'your_api_key' with your actual Huggingface API key
-    headers = {"Authorization": "Bearer your_api_key"}
+    headers = {"Authorization": "Bearer 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"}
     payload = {"inputs": prompt, "options": {"style": style}}
     
     # Make a request to the Huggingface API
-    response = httpx.post("https://api-inference.huggingface.co/models/your-model-name", headers=headers, json=payload)
+    response = httpx.post("https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev", headers=headers, json=payload)
     
     if response.status_code == 200:
         return response.json()
