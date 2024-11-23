@@ -16,6 +16,9 @@ st.write("Enter a prompt and select a style to generate an image.")
 # Collect user input
 prompt = st.text_input("Prompt", "A beautiful landscape")
 
+# Collect user input for style
+style = st.selectbox("Select Style", ["Realistic", "Artistic", "Cartoon", "Abstract"])
+
 # Function to call the Huggingface API using InferenceClient
 def generate_image(prompt):
     try:
